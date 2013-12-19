@@ -12,4 +12,4 @@ $ taskset 2 ./score
 
 to score.
 
-Need some more optimization, some orders are taking a much longer time than mostothers.
+Needs some more optimizations, some orders are taking a much longer time than most others.
