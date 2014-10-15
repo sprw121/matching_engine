@@ -1,4 +1,6 @@
 #include "engine.h"
+#include <string.h>
+#include <stdio.h>
 
 #define NULL ((void *)0)
 
@@ -48,7 +50,7 @@ void copystring(char* d, char* t){
 //Then places the order at the queue at that pricepoint
 void queueOrder(t_order order){
 	orderList[currentOrder].size = order.size;
-	copystring(&(orderList[currentOrder].trader), &(order.trader));
+	copystring(orderList[currentOrder].trader, order.trader);
 
 	orderContainer* temp = (orderList + currentOrder);
 
@@ -58,14 +60,6 @@ void queueOrder(t_order order){
 		orderBook[order.price].first = temp;
 	
 	orderBook[order.price].last = temp;
-}
-
-void findAsk(){
-	while(currentAsk < MAX_PRICE && orderBook[currentAsk].first == NULL) currentAsk++ ;
-}
-
-void findBid(){
-	while(currentBid > 0 && orderBook[currentBid].first == NULL) currentBid--;
 }
 
 //Sends execution reports to both parties in a trade
@@ -136,7 +130,7 @@ t_orderid limit(t_order order) {
 				}
 			}
 				
-			findAsk();
+			currentAsk++;
 		}
 	
 		queueOrder(order);
@@ -174,7 +168,7 @@ t_orderid limit(t_order order) {
 				}
 			}
 
-			findBid();
+			currentBid--;
 		}
 	
 		queueOrder(order);
